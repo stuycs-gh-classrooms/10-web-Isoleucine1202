@@ -19,22 +19,22 @@
         <p>Here is an image of <code>draw_koch(t, 4, 200)</code>:</p>
         <img src="img/koch_original.png" width="700px">
         <p>This fractal has been modified such that every other line drawn is slightly shorter than the rest.</p>
-        <p>Here is my modified fractal's code and an image of <code>draw_koch(t, 4, 200)</code>:</p>
+        <p>Here is my modified fractal's code and an image of <code>draw_koch_variant(t, 4, 200)</code>:</p>
         <div class="row">
             <div style="font-size: 20px;" class="textbx">
                 <pre>
         <code>
-def draw_koch(t, depth, length):
+def draw_koch_variant(t, depth, length):
     if depth == 1:
         t.forward(length)
     else:
-        draw_koch(t, depth-1, length/2)
+        draw_koch_variant(t, depth-1, length/2)
         t.left(60)
-        draw_koch(t, depth-1, length/3)
+        draw_koch_variant(t, depth-1, length/3)
         t.right(120)
-        draw_koch(t, depth-1, length/2)
+        draw_koch_variant(t, depth-1, length/2)
         t.left(60)
-        draw_koch(t, depth-1, length/3)        
+        draw_koch_variant(t, depth-1, length/3)        
         </code>
     </pre>
             </div>
@@ -53,16 +53,17 @@ def draw_koch(t, depth, length):
         <p>Here is an image of <code>draw_sierpinski(t, 5, 400)</code>:</p>
         <img src="img/sierpinski_original.png" width="700px">
         <p>I modified the triangle by having the pen size gradually increase as you go up and to the right in the
-            triangle.
+            triangle. Additionally, the triangle is now colored navy.
         </p>
-        <p>Here is my modified fractal's code and an image of <code>draw_sierpinski(t, 5, 400, 1.0)</code>:</p>
+        <p>Here is my modified fractal's code and an image of <code>draw_sierpinski_variant(t, 5, 400, 1.0)</code>:</p>
         <div class="row">
-            <div style="font-size:15px;" class="textbx">
+            <div style="font-size:14px;" class="textbx">
                 <pre>
         <code>
 pens = 0.03
 
-def draw_sierpinski(t, depth, length, pen_size):
+def draw_sierpinski_variant(t, depth, length, pen_size):
+    t.color('navy')
     global pens
     pens += 0.002
     if depth == 0:
@@ -71,17 +72,17 @@ def draw_sierpinski(t, depth, length, pen_size):
             t.left(120)
     else:
         t.pensize(pen_size)
-        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        draw_sierpinski_variant(t, depth-1, length/2, pen_size + pens)
         t.forward(length/2)
-        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        draw_sierpinski_variant(t, depth-1, length/2, pen_size + pens)
         t.backward(length/2)
         t.left(60)
         t.forward(length/2)
         t.right(60)
-        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        draw_sierpinski_variant(t, depth-1, length/2, pen_size + pens)
         t.left(60)
         t.backward(length/2)
-        t.right(60)         
+        t.right(60)        
         </code>
     </pre>
             </div>
@@ -100,7 +101,7 @@ def draw_sierpinski(t, depth, length, pen_size):
         <img src="img/tree_original.png" width="700px">
         <p>I modified this tree in several ways: First, I altered the color to firebrick. Then, I randomized the lengths
             of each branch. Finally, I randomized the angles between branches.</p>
-        <p>Here is my modified fractal's code and an image of <code>tree(t, 4, 100, 30, 3)</code>- p.s. <em>keep
+        <p>Here is my modified fractal's code and an image of <code>draw_tree_variant(t, 4, 100, 30, 3)</code>- p.s. <em>keep
                 scrolling!</em>:</p>
         <div class="row">
             <div style="font-size:11px; width:800px;" class="textbx">
@@ -108,7 +109,7 @@ def draw_sierpinski(t, depth, length, pen_size):
         <code>
 import random
 
-def tree(t, depth, length, angle, width):
+def draw_tree_variant(t, depth, length, angle, width):
     t.color('firebrick')
     if depth == 0:
         return
@@ -116,9 +117,9 @@ def tree(t, depth, length, angle, width):
         t.pensize(width)
         t.forward(length)
         t.left(angle)
-        tree(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.43), width - 0.2)
+        draw_tree_variant(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.43), width - 0.2)
         t.right(angle*2)
-        tree(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.40), width - 0.2)
+        draw_tree_variant(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.40), width - 0.2)
         t.left(angle)
         t.backward(length)
         </code>
