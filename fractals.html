@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="fractals.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/cooper-hewitt" type="text/css" />
+</head>
+
+<body>
+    <h1>Fractal Showcase</h1>
+    <h3>Ian Savino</h3>
+    <hr>
+    <div>
+        <h2>Fractal I: The Koch Curve</h2>
+        <p>The Koch Curve is a fractal with a straight line adorned by repeating patterns, growing smaller with depth.
+        </p>
+        <p>Here is an image of <code>draw_koch(t, 4, 200)</code>:</p>
+        <img src="img/koch_original.png" width="700px">
+        <p>This fractal has been modified such that every other line drawn is slightly shorter than the rest.</p>
+        <p>Here is my modified fractal's code and an image of <code>draw_koch(t, 4, 200)</code>:</p>
+        <div class="row">
+            <div style="font-size: 20px;" class="textbx">
+                <pre>
+        <code>
+def draw_koch(t, depth, length):
+    if depth == 1:
+        t.forward(length)
+    else:
+        draw_koch(t, depth-1, length/2)
+        t.left(60)
+        draw_koch(t, depth-1, length/3)
+        t.right(120)
+        draw_koch(t, depth-1, length/2)
+        t.left(60)
+        draw_koch(t, depth-1, length/3)        
+        </code>
+    </pre>
+            </div>
+            <div>
+                <img src="img/koch_variant.png" width="90%">
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div>
+        <h2>Fractal II: The Sierpinski Triangle</h2>
+        <p>The Sierpinski Triangle is a self-similar fractal with an overall shape of an equilateral triangle, but
+            subdivided into many equilateral triangles.</p>
+        <p>Here is an image of <code>draw_sierpinski(t, 5, 400)</code>:</p>
+        <img src="img/sierpinski_original.png" width="700px">
+        <p>I modified the triangle by having the pen size gradually increase as you go up and to the right in the
+            triangle.
+        </p>
+        <p>Here is my modified fractal's code and an image of <code>draw_sierpinski(t, 5, 400, 1.0)</code>:</p>
+        <div class="row">
+            <div style="font-size:15px;" class="textbx">
+                <pre>
+        <code>
+pens = 0.03
+
+def draw_sierpinski(t, depth, length, pen_size):
+    global pens
+    pens += 0.002
+    if depth == 0:
+        for _ in range(3):
+            t.forward(length)
+            t.left(120)
+    else:
+        t.pensize(pen_size)
+        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        t.forward(length/2)
+        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        t.backward(length/2)
+        t.left(60)
+        t.forward(length/2)
+        t.right(60)
+        draw_sierpinski(t, depth-1, length/2, pen_size + pens)
+        t.left(60)
+        t.backward(length/2)
+        t.right(60)         
+        </code>
+    </pre>
+            </div>
+            <div>
+                <img src="img/sierpinski_variant.png" width="90%">
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div>
+        <h2>Fractal III: The Fractal Tree</h2>
+        <p>The Fractal Tree is a fractal where 'tree branches' split off systematically.</p>
+        <p>Here is an image of <code>tree(t, 4, 100, 30)</code>:</p>
+        <img src="img/tree_original.png" width="700px">
+        <p>I modified this tree in several ways: First, I altered the color to firebrick. Then, I randomized the lengths
+            of each branch. Finally, I randomized the angles between branches.</p>
+        <p>Here is my modified fractal's code and an image of <code>tree(t, 4, 100, 30, 3)</code>- p.s. <em>keep
+                scrolling!</em>:</p>
+        <div class="row">
+            <div style="font-size:11px; width:800px;" class="textbx">
+                <pre>
+        <code>
+import random
+
+def tree(t, depth, length, angle, width):
+    t.color('firebrick')
+    if depth == 0:
+        return
+    else:
+        t.pensize(width)
+        t.forward(length)
+        t.left(angle)
+        tree(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.43), width - 0.2)
+        t.right(angle*2)
+        tree(t, depth-1, length*(random.random() + 0.3), angle * (random.random() + 0.40), width - 0.2)
+        t.left(angle)
+        t.backward(length)
+        </code>
+    </pre>
+            </div>
+            <div>
+                <img src="img/tree_variant.png" width="90%">
+            </div>
+        </div>
+        <p>One interesting thing to note about this fractal variant: it's better when it's bigger! Here's a depth 10
+            model (<code>tree(t, 10, 100, 30, 3)</code>):</p>
+        <img src="img/tree_variant_better.png" width="700px">
+    </div>
+    <br>
+</body>
+
+</html>
